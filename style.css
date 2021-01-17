@@ -22,5 +22,12 @@ h4 {
   .input-group button {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
-    height: 67%;
+  }
+
+  .hide-forecast {
+      display: none;
+  }
+
+  .show-forecast {
+      display: block;
   }
