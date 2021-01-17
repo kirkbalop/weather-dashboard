@@ -16,6 +16,19 @@ $("#searchBtn").on("click", function() {
     $("#5day-h4")
         .removeClass("hide-forecast")
         .addClass("show-forecast");
-})
+
+    city = $("#city-name").val();
+
+    // clear input
+    $("#city-name").val("");
 
 const queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey
+
+// https://www.w3schools.com/jquery/jquery_ajax_get_post.asp
+// ajax documentation for future reference
+$.ajax({
+    url: queryUrl,
+    method: "GET"
+})
+
+})
