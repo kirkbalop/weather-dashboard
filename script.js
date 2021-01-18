@@ -43,9 +43,52 @@ $.ajax({
     console.log(response.main.humidity)
 
     console.log(response.wind.speed)
+
+    getCurrentConditions(response);
+    getCurrentForecast(response);
+    makeList();
 })
 
 });
+
+function createList() {
+    let listItem = $("<li>")
+        .addClass("list-group-item").text(city);
+    
+        $(".list").append(listItem);
+}
+
+function getCurrentConditions(response) {
+    // get temp, convert to F
+    let tempF = (response.main.temp - 273.15) * 1.80 + 32;
+    tempF = Math.floor(tempF);
+
+    $("#current-city").empty();
+
+    // Retrieve content and set
+    const card = $("<div>")
+        .addClass("card");
+    const cardBody = $("<div>")
+        .addClass("card-body");
+    const city = $("<h4>")
+        .addClass("card-title").text;
+    const cityDate = $("<h4>")
+        .addClass("card-title").text(date.toLocaleDateString("en-US"));
+    const temperature = $("<p>")
+        .addClass("card-text current-temp").text("Temperature: " + tempF + " °F");
+    const humidity = $("<p>")
+        .addClass("card-text current-humidity").text("Humidity: " + response.main.humidity + "%");
+    const wind = $("<p>")
+        .addClass("card-text current-wind").text("Wind Speed: " + response.wind.speed + " MPH");
+    const image = $("<img>")
+        .attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
+
+    // add to page
+    city.append(cityDate, image);
+    cardBody.append(city, temperature, humidity, wind);
+    card.append(cardBody);
+    $("#current-city").append(card);
+};
 
 function getCurrentForecast() {
     $.ajax({
@@ -58,14 +101,14 @@ function getCurrentForecast() {
         $("#forecast").empty();
 
         // variable to hold .list
-        var results = response.list;
+        let results = response.list;
         console.log(results);
 
         // declaring start date
 
-        for (i = 0; i < results.length; i++) {
-            var day = Number(results[i].dt_txt.split("-")[2].split(" ")[0]);
-            var hour = results[i].dt_txt.split("-")[2].split(" ")[1];
+        for (let i = 0; i < results.length; i++) {
+            let day = Number(results[i].dt_txt.split("-")[2].split(" ")[0]);
+            let hour = results[i].dt_txt.split("-")[2].split(" ")[1];
             console.log(day);
             console.log(hour);
 
@@ -75,7 +118,6 @@ function getCurrentForecast() {
                 let temp = (results[i].main.temp - 273.15) * 1.80 + 32;
                 let tempF = Math.floor(temp);
 
-                // var doesn't work here for some reason, but const does
                     const card = $("<div>")
                         .addClass("card col-md-2 ml-4 bg-primary text-white");
                     const cardBody = $("<div>")
