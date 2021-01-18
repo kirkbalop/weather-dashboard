@@ -95,9 +95,36 @@ function getCurrentForecast() {
     $.ajax({
         url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + apiKey,
         method: "GET"
-    }).then(function(response){
+    }).then(function(forecastResponse){
 
-        console.log(response)
+        console.log(forecastResponse)
+
+//         for (var i = 5; i < 40; i+=8) {
+//         var forecastResults = forecastResponse;
+//         var forecastResultsDate = forecastResults.list[i].dt_txt;
+//         var forecastDate = new Date(forecastResultsDate).toLocaleDateString("en-US");
+//         var forecastTemp = forecastResults.list[i].main.temp;
+//         var forecastHumidity = forecastResults.list[i].main.humidity;
+//         var forecastIcon = forecastResults.list[i].weather[0].icon;
+
+//         forecastObj["list"] = {};
+//         forecastObj["list"]["date"] = forecastDate;
+//         forecastObj["list"]["temp"] = forecastTemp;
+//         forecastObj["list"]["humidity"] = forecastHumidity;
+//         forecastObj["list"]["icon"] = forecastIcon;
+
+//         forecastArray.push(forecastObj);
+//         }
+
+//         for (var j = 0; j < 5; j++) {
+//             var forecastArrDate = forecastArr[j].list.date;
+//             var forecastIconURL = getWeatherIcon + forecastArr[j].list.icon + ".png";
+//             var forecastArrTemp = Math.floor(forecastArr[j].list.temp);
+//             var forecastArrHumidity = forecastArr[j].list.humidity;
+//         }
+
+// // second attempt follows
+
         $("#forecast").empty();
 
         Date.prototype.addDays = function(days) {
