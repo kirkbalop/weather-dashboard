@@ -1,7 +1,7 @@
 // input value
 let city = $("#city-name").val();
 // api key 
-const apiKey = "&appid=8163dffe92726c08e74d88ed012ec920";
+const apiKey = "&appid=8d813a224e07db0ccde3dc2768165f2a";
 
 let date = new Date();
 
@@ -30,5 +30,29 @@ $.ajax({
     url: queryUrl,
     method: "GET"
 })
+.then(function(response) {
+    console.log(response)
 
+    console.log(response.name)
+    console.log(response.weather[0].icon)
+
+    // convert to farenheit
+    let tempF = (response.main.temp - 273.15) *1.80 +32;
+    console.log(Math.floor(tempF))
+
+    console.log(response.main.humidity)
+
+    console.log(response.wind.speed)
 })
+
+});
+
+function getCurrentForecast() {
+    $.ajax({
+        url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey,
+        method: "GET"
+    }).then(function(response){
+
+        console.log(response)
+    })
+}
