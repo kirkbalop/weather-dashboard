@@ -71,7 +71,7 @@ function getCurrentConditions(response) {
     const cardBody = $("<div>")
         .addClass("card-body");
     const city = $("<h4>")
-        .addClass("card-title").text;
+        .addClass("card-title").text(response.name);
     const cityDate = $("<h4>")
         .addClass("card-title").text(date.toLocaleDateString("en-US"));
     const temperature = $("<p>")
