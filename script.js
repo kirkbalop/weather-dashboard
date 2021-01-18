@@ -2,6 +2,7 @@
 let city = $("#city-name").val();
 // api key 
 const apiKey = "&appid=8d813a224e07db0ccde3dc2768165f2a";
+let cardRow = $(".card-row");
 
 var date = new Date();
 
@@ -92,11 +93,11 @@ function getCurrentConditions(response) {
 
 function getCurrentForecast() {
     $.ajax({
-        url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey,
+        url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + apiKey,
         method: "GET"
     }).then(function(response){
 
-        console.log(response.dt)
+        console.log(response)
         $("#forecast").empty();
 
         Date.prototype.addDays = function(days) {
@@ -115,15 +116,18 @@ function getCurrentForecast() {
             return dateArray;
         }
 
-        var dateArray = getDates(new Date(), new Date().addDays(5));
+        var dateArray = getDates(new Date(), new Date().addDays());
         for (i = 0; i <= dateArray.length; i ++) {
-            alert(dateArray[i]);
+            let day = Date;
+            let hour = dateArray[i].dt_txt.split('-')[2].split(' ')[1];
+            console.log(day);
+            console.log(hour);
         }
 
             if(results[i].dt_txt.indexOf("12:00:00") !== -1){
 
                 // get temp and revert to F
-                let temp = (results[i].main.temp - 273.15) * 1.80 + 32;
+                let temp = (dateArray[i].main.temp - 273.15) * 1.80 + 32;
                 let tempF = Math.floor(temp);
 
                     const card = $("<div>")
