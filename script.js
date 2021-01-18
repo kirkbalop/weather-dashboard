@@ -3,7 +3,7 @@ let city = $("#city-name").val();
 // api key 
 const apiKey = "&appid=8d813a224e07db0ccde3dc2768165f2a";
 
-let date = new Date();
+var date = new Date();
 
 $("#city-name").keypress(function(event) {
     if (event.keyCode === 13) {
@@ -46,7 +46,7 @@ $.ajax({
 
     getCurrentConditions(response);
     getCurrentForecast(response);
-    makeList();
+    createList();
 })
 
 });
@@ -96,21 +96,29 @@ function getCurrentForecast() {
         method: "GET"
     }).then(function(response){
 
-        console.log(response)
         console.log(response.dt)
         $("#forecast").empty();
 
-        // variable to hold .list
-        let results = response.list;
-        console.log(results);
+        Date.prototype.addDays = function(days) {
+            var dat = new Date(this.valueOf())
+            dat.setDate(dat.getDate() + days);
+            return dat;
+        }
 
-        // declaring start date
+        function getDates(startDate, stopDate) {
+            var dateArray = new Array();
+            var currentDate = startDate;
+            while (currentDate <= stopDate) {
+                dateArray.push(currentDate)
+                currentDate = currentDate.addDays(1);
+            }
+            return dateArray;
+        }
 
-        for (let i = 0; i < results.length; i++) {
-            let day = Number(results[i].dt_txt.split("-")[2].split(" ")[0]);
-            let hour = results[i].dt_txt.split("-")[2].split(" ")[1];
-            console.log(day);
-            console.log(hour);
+        var dateArray = getDates(new Date(), new Date().addDays(5));
+        for (i = 0; i <= dateArray.length; i ++) {
+            alert(dateArray[i]);
+        }
 
             if(results[i].dt_txt.indexOf("12:00:00") !== -1){
 
@@ -137,5 +145,5 @@ function getCurrentForecast() {
                         $("#forecast").append(card);
             }
         }
-    });
+    );
 }
